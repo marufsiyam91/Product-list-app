@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Products from "../Products/Products";
+import './Product_list.css'
 
 function Product_list() {
   const [productName, setProductName] = useState("");
@@ -8,7 +9,6 @@ function Product_list() {
   const [productQuantity, setProductQuantity] = useState("");
   const [description, setDescription] = useState("");
   const [listedProducts, setListedProducts] = useState([]);
-
 
   const product = {
     productName,
@@ -27,14 +27,13 @@ function Product_list() {
   };
 
   const submitHandler = (e) => {
-     e.preventDefault()
+    e.preventDefault();
     setListedProducts([...listedProducts, product]);
     clearInput();
   };
 
-
   return (
-    <div>
+    <div className="products_list_container">
       <form onSubmit={submitHandler}>
         <label htmlFor="productName">Product Name</label>
         <input
@@ -80,9 +79,31 @@ function Product_list() {
       </form>
 
       <div className="products_list_wrapper">
-        {listedProducts.map((product) => (
-          <Products key={product.productId} product={product}/>
-        ))}
+        {listedProducts.length > 0 ? (
+          <>
+            <div className="table_container">
+               <table>
+               <tbody>
+                    <thead>
+                    <tr>
+                         <th>Id</th>
+                         <th>Name</th>
+                         <th>Price</th>
+                         <th>Quantity</th>
+                         <th>Description</th>
+                    </tr>
+                    </thead>
+                    {listedProducts.map((product) => (
+                    <Products key={product.productId} product={product} />
+                    ))}
+               </tbody>
+            </table>
+            </div>
+            <button onClick={() => setListedProducts([])}>Remove All</button>
+          </>
+        ) : (
+          <div className="empty_products">No products have been added yet</div>
+        )}
       </div>
     </div>
   );

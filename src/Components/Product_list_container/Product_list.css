@@ -1,0 +1,30 @@
+.products_list_container{
+     display: flex;
+     width: 100%;
+     height: 100vh;
+     justify-content: space-around;
+}
+
+
+form{
+     display: flex;
+     flex-direction: column;
+     width: 510px;
+     height: 400px;
+     background: #d0d8ee;
+     justify-content: center;
+     color: #fff;
+     border-radius: 15px;
+     padding: 20px;
+}
+
+form input{
+     width: 85%;
+     padding: 5px 10px;
+     outline: none;
+}
+
+form button{
+     width: 120px;
+     padding: 5px 14px;
+}
