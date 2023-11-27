@@ -1,19 +1,23 @@
 import React from 'react'
 import './Products.css'
+import {MdDelete} from 'react-icons/md'
 
-const Products = ({product}) => {
-     console.log(product)
-     const {productName, productId, productPrice,productQuantity, description} = product
+const Products = ({product, deleteProduct}) => {
+     const {productName, productId,color, productPrice,productQuantity, description} = product
   return (
-    <div>
-          <tr>
-               <td>{productId}</td>
-               <td>{productName}</td>
-               <td>{productPrice}</td>
-               <td>{productQuantity}</td>
-               <td>{description}</td>
-          </tr>
-    </div>
+          <>
+               <tr>
+                    <td>{productName}</td>
+                    <td>{productPrice}</td>
+                    <td>{productQuantity}</td>
+                    <td>{color}</td>
+                    <td>{description}</td>
+                    <td onClick={() => deleteProduct(productId)} className='delete_btn'>
+                         <MdDelete color='red'/>
+                    </td>
+               </tr>
+          </>
+
   )
 }
 

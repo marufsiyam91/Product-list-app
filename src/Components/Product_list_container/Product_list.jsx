@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Products from "../Products/Products";
-import './Product_list.css'
+import "./Product_list.css";
+import { getProductFromlocalStorage } from "../../Utils/Utils"
 
 function Product_list() {
   const [productName, setProductName] = useState("");
@@ -8,13 +9,15 @@ function Product_list() {
   const [productPrice, setProductPrice] = useState("");
   const [productQuantity, setProductQuantity] = useState("");
   const [description, setDescription] = useState("");
-  const [listedProducts, setListedProducts] = useState([]);
+  const [color, setColor] = useState("")
+  const [listedProducts, setListedProducts] = useState(getProductFromlocalStorage());
 
   const product = {
     productName,
-    productId,
+    productId: new Date().getMilliseconds(),
     productPrice,
     productQuantity,
+    color,
     description,
   };
 
@@ -27,10 +30,20 @@ function Product_list() {
   };
 
   const submitHandler = (e) => {
-    e.preventDefault();
-    setListedProducts([...listedProducts, product]);
-    clearInput();
+      e.preventDefault();
+      setListedProducts([...listedProducts, product]);
+      clearInput();
   };
+
+  const deleteProduct = (id) => {
+    const filteredProduct = listedProducts.filter((product) =>  product.productId !== id )
+    setListedProducts(filteredProduct)
+    console.log('button clicked')
+  }
+
+  useEffect(() => {
+    localStorage.setItem('products', JSON.stringify(listedProducts))
+  }, [listedProducts])
 
   return (
     <div className="products_list_container">
@@ -41,31 +54,42 @@ function Product_list() {
           id="productName"
           value={productName}
           onChange={(e) => setProductName(e.target.value)}
-        />
-
-        <label htmlFor="productId">Product Id</label>
-        <input
-          type="text"
-          id="productId"
-          value={productId}
-          onChange={(e) => setProductId(e.target.value)}
+          placeholder="Product Name"
+          required
         />
 
         <label htmlFor="productPrice">Product Price</label>
         <input
-          type="text"
+          type="number"
           id="productPrice"
           value={productPrice}
           onChange={(e) => setProductPrice(e.target.value)}
+          placeholder="Product Price"
+          required
         />
 
         <label htmlFor="productQuantity">Quantity</label>
         <input
-          type="text"
+          type="number"
           id="productQuantity"
           value={productQuantity}
           onChange={(e) => setProductQuantity(e.target.value)}
+          placeholder="Qunatity"
+          required
         />
+
+
+        <label htmlFor="choose_color">Choose Color</label>
+        <select 
+        style={{width: "95%", height: "30px", borderRadius: "5px"}} 
+        name="color" 
+        id="choose_color"
+        onChange={(e) => setColor(e.target.value)}>
+          <option value="Blue">Blue</option>
+          <option value="Green">Green</option>
+          <option value="Red">Red</option>
+          <option value="Yellow">Yellow</option>
+        </select>
 
         <label htmlFor="productDescription">Description</label>
         <input
@@ -73,7 +97,11 @@ function Product_list() {
           id="productDecription"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description"
+          required
         />
+
+        
 
         <button>Add Product</button>
       </form>
@@ -81,25 +109,24 @@ function Product_list() {
       <div className="products_list_wrapper">
         {listedProducts.length > 0 ? (
           <>
-            <div className="table_container">
-               <table>
-               <tbody>
-                    <thead>
-                    <tr>
-                         <th>Id</th>
-                         <th>Name</th>
-                         <th>Price</th>
-                         <th>Quantity</th>
-                         <th>Description</th>
-                    </tr>
-                    </thead>
-                    {listedProducts.map((product) => (
-                    <Products key={product.productId} product={product} />
-                    ))}
-               </tbody>
-            </table>
+            <div className="table_content_wrapper">
+              <table>
+                <tbody>
+                  <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Color</th>
+                    <th>Description</th>
+                    <th></th>
+                  </tr>
+
+                  {listedProducts.map((product) => (
+                    <Products key={product.productId} product={product}  deleteProduct={deleteProduct}/>
+                  ))}
+                </tbody>
+              </table>
             </div>
-            <button onClick={() => setListedProducts([])}>Remove All</button>
           </>
         ) : (
           <div className="empty_products">No products have been added yet</div>
