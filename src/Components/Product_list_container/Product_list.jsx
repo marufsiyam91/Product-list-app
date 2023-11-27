@@ -46,93 +46,96 @@ function Product_list() {
   }, [listedProducts])
 
   return (
-    <div className="products_list_container">
-      <form onSubmit={submitHandler}>
-        <label htmlFor="productName">Product Name</label>
-        <input
-          type="text"
-          id="productName"
-          value={productName}
-          onChange={(e) => setProductName(e.target.value)}
-          placeholder="Product Name"
-          required
-        />
+    <>
+        <h1 style={{textAlign: "center", fontFamily: "cursive", marginTop: "15px"}}>Product List App</h1>
+        <div className="products_list_container">
+            <form onSubmit={submitHandler}>
+              <label htmlFor="productName">Product Name</label>
+              <input
+                type="text"
+                id="productName"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
+                placeholder="Product Name"
+                required
+              />
 
-        <label htmlFor="productPrice">Product Price</label>
-        <input
-          type="number"
-          id="productPrice"
-          value={productPrice}
-          onChange={(e) => setProductPrice(e.target.value)}
-          placeholder="Product Price"
-          required
-        />
+              <label htmlFor="productPrice">Product Price</label>
+              <input
+                type="number"
+                id="productPrice"
+                value={productPrice}
+                onChange={(e) => setProductPrice(e.target.value)}
+                placeholder="Product Price"
+                required
+              />
 
-        <label htmlFor="productQuantity">Quantity</label>
-        <input
-          type="number"
-          id="productQuantity"
-          value={productQuantity}
-          onChange={(e) => setProductQuantity(e.target.value)}
-          placeholder="Qunatity"
-          required
-        />
+              <label htmlFor="productQuantity">Quantity</label>
+              <input
+                type="number"
+                id="productQuantity"
+                value={productQuantity}
+                onChange={(e) => setProductQuantity(e.target.value)}
+                placeholder="Qunatity"
+                required
+              />
 
 
-        <label htmlFor="choose_color">Choose Color</label>
-        <select 
-        style={{width: "95%", height: "30px", borderRadius: "5px"}} 
-        name="color" 
-        id="choose_color"
-        onChange={(e) => setColor(e.target.value)}>
-          <option value="Blue">Blue</option>
-          <option value="Green">Green</option>
-          <option value="Red">Red</option>
-          <option value="Yellow">Yellow</option>
-        </select>
+              <label htmlFor="choose_color">Choose Color</label>
+              <select 
+              style={{width: "95%", height: "30px", borderRadius: "5px"}} 
+              name="color" 
+              id="choose_color"
+              onChange={(e) => setColor(e.target.value)}>
+                <option value="Blue">Blue</option>
+                <option value="Green">Green</option>
+                <option value="Red">Red</option>
+                <option value="Yellow">Yellow</option>
+              </select>
 
-        <label htmlFor="productDescription">Description</label>
-        <input
-          type="text"
-          id="productDecription"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
-          required
-        />
+              <label htmlFor="productDescription">Description</label>
+              <input
+                type="text"
+                id="productDecription"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Description"
+                required
+              />
 
-        
+              
 
-        <button>Add Product</button>
-      </form>
+              <button>Add Product</button>
+            </form>
 
-      <div className="products_list_wrapper">
-        {listedProducts.length > 0 ? (
-          <>
-            <div className="table_content_wrapper">
-              <table>
-                <tbody>
-                  <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Color</th>
-                    <th>Description</th>
-                    <th></th>
-                  </tr>
+            <div className="products_list_wrapper">
+              {listedProducts.length > 0 ? (
+                <>
+                  <div className="table_content_wrapper">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <th>Name</th>
+                          <th>Price</th>
+                          <th>Quantity</th>
+                          <th>Color</th>
+                          <th>Description</th>
+                          <th></th>
+                        </tr>
 
-                  {listedProducts.map((product) => (
-                    <Products key={product.productId} product={product}  deleteProduct={deleteProduct}/>
-                  ))}
-                </tbody>
-              </table>
+                        {listedProducts.map((product) => (
+                          <Products key={product.productId} product={product}  deleteProduct={deleteProduct}/>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              ) : (
+                <div className="empty_products">No products have been added yet</div>
+              )}
             </div>
-          </>
-        ) : (
-          <div className="empty_products">No products have been added yet</div>
-        )}
-      </div>
     </div>
+    </>
   );
 }
 
