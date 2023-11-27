@@ -120,7 +120,7 @@ function Product_list() {
                           <th>Quantity</th>
                           <th>Color</th>
                           <th>Description</th>
-                          <th></th>
+                          <th>Delete</th>
                         </tr>
 
                         {listedProducts.map((product) => (
